@@ -52,21 +52,21 @@ export default function SignUpPage() {
         className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
       />
 
-      <label htmlFor="email">email</label>
+      <label htmlFor="email">Email</label>
       <input
         type="text"
         id="email"
-        placeholder="email"
+        placeholder="Email"
         value={user.email}
         onChange={(e) => setUser({ ...user, email: e.target.value })}
         className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
       />
 
-      <label htmlFor="password">password</label>
+      <label htmlFor="password">Password</label>
       <input
         type="password"
         id="password"
-        placeholder="password"
+        placeholder="Password"
         value={user.password}
         onChange={(e) => setUser({ ...user, password: e.target.value })}
         className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
