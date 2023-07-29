@@ -4,16 +4,38 @@ import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function SignUpPage() {
+  const router = useRouter();
   const [user, setUser] = React.useState({
     email: "",
     password: "",
     username: "",
   });
+  const [loading, setLoading] = React.useState(false);
 
   const handleSignUp = async () => {
-    console.log("Signup called");
+    setLoading(true);
+    try {
+      const { statusText, status, data } = await axios.post(
+        "/api/users/signup",
+        user
+      );
+
+      if (statusText === "Created" && status === 201) {
+        toast.success("Signup Successful");
+        router.push("/login");
+      } else {
+        toast.error(
+          `Signup failed, statusText: ${statusText}, status: ${status}`
+        );
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -52,12 +74,20 @@ export default function SignUpPage() {
 
       <button
         onClick={handleSignUp}
+        disabled={
+          (user.email.length && user.password.length && user.username.length) ||
+          !loading
+            ? false
+            : true
+        }
         className="p-2 border border-gray-200 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
       >
-        Signup here
+        {loading ? "Signing up..." : "Signup here"}
       </button>
 
       <Link href={"/login"}>Visit login page</Link>
+
+      <Toaster />
     </div>
   );
 }
