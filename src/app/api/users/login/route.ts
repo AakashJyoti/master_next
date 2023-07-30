@@ -1,7 +1,7 @@
 import { connect } from "@/dbConfig/dbConfig";
 import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
-import { compare } from "bcryptjs";
+import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 connect();
@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
     }
 
     // If the password is correct
-    const validatePassword = await compare(password, user.password);
+    const validatePassword = await bcryptjs.compare(password, user.password);
 
     if (!validatePassword) {
       return NextResponse.json(

@@ -14,7 +14,7 @@ type PageParams = {
 
 export default function UserProfilePage({ params }: PageParams) {
   const router = useRouter();
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   const handleLogout = async () => {
     setLoading(true);

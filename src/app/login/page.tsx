@@ -6,13 +6,18 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
+type UserType = {
+  email: string;
+  password: string;
+};
+
 export default function LoginPage() {
   const router = useRouter();
-  const [user, setUser] = React.useState({
+  const [user, setUser] = React.useState<UserType>({
     email: "",
     password: "",
   });
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   const handleLogin = async () => {
     setLoading(true);

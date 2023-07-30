@@ -8,7 +8,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 export default function ProfilePage() {
   const router = useRouter();
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   const handleLogout = async () => {
     setLoading(true);
