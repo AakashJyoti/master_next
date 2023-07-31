@@ -38,7 +38,7 @@ export default function SignUpPage() {
         );
       }
     } catch (error: any) {
-      toast.error(error.message);
+      toast.error(error.response.data.error);
     } finally {
       setLoading(false);
     }
@@ -81,12 +81,14 @@ export default function SignUpPage() {
       <button
         onClick={handleSignUp}
         disabled={
-          (user.email.length && user.password.length && user.username.length) ||
+          user.email.length &&
+          user.password.length &&
+          user.username.length &&
           !loading
             ? false
             : true
         }
-        className="p-2 border border-gray-200 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
+        className="p-2 border border-gray-200 rounded-lg mb-4 focus:outline-none focus:border-gray-600 bg-white text-black font-medium disabled:bg-black disabled:text-white"
       >
         {loading ? "Signing up..." : "Signup here"}
       </button>

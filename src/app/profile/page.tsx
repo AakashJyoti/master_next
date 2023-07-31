@@ -23,34 +23,26 @@ export default function ProfilePage() {
         );
       }
     } catch (error: any) {
-      toast.error(error.message);
+      toast.error(error.response.data.error);
     } finally {
       setLoading(false);
     }
   };
 
-  const getloggedUserInfo = async () => {
-    try {
-      const { statusText, status, data } = await axios.get(
-        "/api/users/logedUserInfo"
-      );
-      console.log(data.data._id);
-      router.push(`/profile/${data.data._id}`);
-      // if (statusText === "OK" && status === 200) {
-      //   console.log(data);
-      // } else {
-      //   toast.error(
-      //     `Logut failed, statusText: ${statusText}, status: ${status}`
-      //   );
-      // }
-    } catch (error: any) {
-      toast.error(error.message);
-    }
-  };
-
   React.useEffect(() => {
+    const getloggedUserInfo = async () => {
+      try {
+        const { statusText, status, data } = await axios.get(
+          "/api/users/logedUserInfo"
+        );
+        console.log(data.data._id);
+        router.push(`/profile/${data.data._id}`);
+      } catch (error: any) {
+        toast.error(error.response.data.error);
+      }
+    };
     getloggedUserInfo();
-  }, []);
+  }, [router]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 gap-2">

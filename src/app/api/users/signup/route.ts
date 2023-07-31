@@ -14,10 +14,14 @@ export async function POST(request: NextRequest) {
     // check if user already exists
     const user = await User.findOne({ email });
     if (user) {
-      return NextResponse.json(
-        { error: "User already exits" },
-        { status: 400 }
-      );
+      if (user.isVerified) {
+        return NextResponse.json(
+          { error: "User already exits" },
+          { status: 400 }
+        );
+      } else {
+        await User.findByIdAndDelete(user._id);
+      }
     }
 
     //  Hashing passoword

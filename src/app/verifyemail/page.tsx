@@ -33,7 +33,7 @@ export default function VerifyEmailPage() {
           }
         } catch (error: any) {
           setError(true);
-          toast.error(error.message);
+          toast.error(error.response.data.error);
         } finally {
           setLoading(false);
         }

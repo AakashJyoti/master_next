@@ -20,6 +20,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (!user.isVerified) {
+      return NextResponse.json(
+        { error: "User does not exits!.." },
+        { status: 400 }
+      );
+    }
+
     // If the password is correct
     const validatePassword = await bcryptjs.compare(password, user.password);
 
