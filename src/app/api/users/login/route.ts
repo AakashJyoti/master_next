@@ -13,6 +13,7 @@ export async function POST(request: NextRequest) {
 
     // Check if user exits
     const user = await User.findOne({ email });
+
     if (!user) {
       return NextResponse.json(
         { error: "User does not exits!.." },
@@ -39,9 +40,8 @@ export async function POST(request: NextRequest) {
 
     // Create token data
     const tokenData = {
-      id: user._id,
+      id: user._id.toString(),
     };
-
     // Create token
     const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, {
       expiresIn: "1h",
@@ -55,6 +55,7 @@ export async function POST(request: NextRequest) {
     response.cookies.set("token", token, { httpOnly: true });
     return response;
   } catch (error: any) {
+    console.log("called");
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
