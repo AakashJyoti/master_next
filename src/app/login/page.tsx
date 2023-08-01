@@ -97,13 +97,19 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={!loading ? false : true}
-          className="p-2 border border-gray-200 rounded-lg m-4 focus:outline-none focus:border-gray-600 bg-white text-black font-medium disabled:bg-black disabled:text-white"
+          className="p-2 border border-gray-200 rounded-lg m-4 focus:outline-none focus:border-gray-600 bg-white text-black font-medium disabled:bg-black disabled:text-white hover:border-gray-600 hover:font-semibold"
         >
           {loading ? "Logging in..." : "Login here"}
         </button>
       </form>
 
       <Link href={"/signup"}>Visit signup page</Link>
+      <Link
+        href={"/forgotPassword"}
+        className="mt-4 text-blue-300 hover:text-blue-400"
+      >
+        Forgot Password ?
+      </Link>
       <Toaster />
     </div>
   );

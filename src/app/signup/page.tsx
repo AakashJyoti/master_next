@@ -116,7 +116,7 @@ export default function SignUpPage() {
         <button
           type="submit"
           disabled={!loading ? false : true}
-          className="p-2 border border-gray-200 rounded-lg m-4 focus:outline-none focus:border-gray-600 bg-white text-black font-medium disabled:bg-black disabled:text-white"
+          className="p-2 border border-gray-200 rounded-lg m-4 focus:outline-none focus:border-gray-600 bg-white text-black font-medium disabled:bg-black disabled:text-white hover:border-gray-600 hover:font-semibold"
         >
           {loading ? "Signing up..." : "Signup here"}
         </button>

@@ -48,7 +48,7 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <h1 className="text-4xl">LOGIN</h1>
+      <h1 className="text-4xl">FORGOT PASSWORD</h1>
       <form
         onSubmit={handleSubmit(handleForgotPssword)}
         className="flex flex-col m-4"
@@ -77,13 +77,13 @@ export default function ForgotPasswordPage() {
         <button
           type="submit"
           disabled={!loading ? false : true}
-          className="p-2 border border-gray-200 rounded-lg m-4 focus:outline-none focus:border-gray-600 bg-white text-black font-medium disabled:bg-black disabled:text-white"
+          className="p-2 border border-gray-200 rounded-lg m-4 focus:outline-none focus:border-gray-600 bg-white text-black font-medium disabled:bg-black disabled:text-white hover:border-gray-600 hover:font-semibold"
         >
           {loading ? "Creating..." : "Create New Password"}
         </button>
       </form>
 
-      <Link href={"/signup"}>Visit signup page</Link>
+      <Link href={"/login"}>Visit login page</Link>
       <Toaster />
     </div>
   );
