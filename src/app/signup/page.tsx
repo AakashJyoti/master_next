@@ -5,8 +5,9 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { useForm, SubmitHandler } from "react-hook-form";
 
-type UserType = {
+type FormValues = {
   email: string;
   password: string;
   username: string;
@@ -14,22 +15,25 @@ type UserType = {
 
 export default function SignUpPage() {
   const router = useRouter();
-  const [user, setUser] = React.useState<UserType>({
-    email: "",
-    password: "",
-    username: "",
-  });
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  const handleSignUp = async () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const handleSignUp: SubmitHandler<FormValues> = async (formData) => {
     setLoading(true);
     try {
       const { statusText, status, data } = await axios.post(
         "/api/users/signup",
-        user
+        formData
       );
 
       if (statusText === "Created" && status === 201) {
+        reset();
         toast.success("Signup Successful");
         router.push("/login");
       } else {
@@ -46,52 +50,77 @@ export default function SignUpPage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <h1>SignUp</h1>
+      <h1 className="text-4xl">SIGNUP</h1>
+      <form onSubmit={handleSubmit(handleSignUp)} className="flex flex-col m-4">
+        <div className="mb-4 flex flex-col">
+          <label htmlFor="username">Username:-</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="Username"
+            {...register("username", { required: true })}
+            className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-600 text-black"
+          />
+          {errors?.username && (
+            <span>
+              {errors?.username.type === "required" && "This field is required"}
+            </span>
+          )}
+        </div>
 
-      <label htmlFor="username">Username</label>
-      <input
-        type="text"
-        id="username"
-        placeholder="Username"
-        value={user.username}
-        onChange={(e) => setUser({ ...user, username: e.target.value })}
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-      />
+        <div className="mb-4 flex flex-col">
+          <label htmlFor="email">Email:-</label>
+          <input
+            type="text"
+            id="email"
+            placeholder="Email"
+            {...register("email", {
+              required: true,
+              pattern:
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            })}
+            className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-600 text-black"
+          />
+          {errors?.email && (
+            <span>
+              {errors?.email.type === "required" && "This field is required"}
+              {errors?.email.type === "pattern" && "Invalid Email"}
+            </span>
+          )}
+        </div>
 
-      <label htmlFor="email">Email</label>
-      <input
-        type="text"
-        id="email"
-        placeholder="Email"
-        value={user.email}
-        onChange={(e) => setUser({ ...user, email: e.target.value })}
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-      />
+        <div className="mb-4 flex flex-col">
+          <label htmlFor="password">Password:-</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            {...register("password", {
+              required: true,
+              maxLength: 8,
+              minLength: 6,
+            })}
+            className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-600 text-black"
+          />
+          {errors?.password && (
+            <span>
+              {errors?.password.type === "required" && "This field is required"}
+              {errors?.password.type === "maxLength" &&
+                "Minimum 6 digit requird"}
+              {errors?.password.type === "minLength" &&
+                "Maximum 8 digit required"}
+            </span>
+          )}
+        </div>
 
-      <label htmlFor="password">Password</label>
-      <input
-        type="password"
-        id="password"
-        placeholder="Password"
-        value={user.password}
-        onChange={(e) => setUser({ ...user, password: e.target.value })}
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-      />
-
-      <button
-        onClick={handleSignUp}
-        disabled={
-          user.email.length &&
-          user.password.length &&
-          user.username.length &&
-          !loading
-            ? false
-            : true
-        }
-        className="p-2 border border-gray-200 rounded-lg mb-4 focus:outline-none focus:border-gray-600 bg-white text-black font-medium disabled:bg-black disabled:text-white"
-      >
-        {loading ? "Signing up..." : "Signup here"}
-      </button>
+        <button
+          type="submit"
+          disabled={!loading ? false : true}
+          className="p-2 border border-gray-200 rounded-lg m-4 focus:outline-none focus:border-gray-600 bg-white text-black font-medium disabled:bg-black disabled:text-white"
+        >
+          {loading ? "Signing up..." : "Signup here"}
+        </button>
+      </form>
 
       <Link href={"/login"}>Visit login page</Link>
 
