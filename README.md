@@ -1,1 +1,1 @@
-next.js authentication master
+next.js authentication master.
