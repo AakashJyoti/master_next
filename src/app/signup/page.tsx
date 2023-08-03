@@ -35,7 +35,7 @@ export default function SignUpPage() {
       if (statusText === "Created" && status === 201) {
         reset();
         toast.success("Signup Successful");
-        router.push("/login");
+        router.push("/checkMail");
       } else {
         toast.error(
           `Signup failed, statusText: ${statusText}, status: ${status}`

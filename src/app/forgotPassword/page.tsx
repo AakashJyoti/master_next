@@ -30,15 +30,15 @@ export default function ForgotPasswordPage() {
         formData
       );
 
-      // if (statusText === "OK" && status === 200) {
-      //   reset();
-      //   toast.success("Login Successful");
-      //   router.push("/profile");
-      // } else {
-      //   toast.error(
-      //     `Login failed, statusText: ${statusText}, status: ${status}`
-      //   );
-      // }
+      if (statusText === "OK" && status === 200) {
+        reset();
+        toast.success("Mail send!.");
+        router.push("/checkMail");
+      } else {
+        toast.error(
+          `Sending mail error, statusText: ${statusText}, status: ${status}`
+        );
+      }
     } catch (error: any) {
       toast.error(error.response.data.error);
     } finally {

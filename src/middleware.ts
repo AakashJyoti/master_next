@@ -7,6 +7,7 @@ export function middleware(request: NextRequest) {
     path === "/login" ||
     path === "/signup" ||
     path === "/verifyemail" ||
+    path === "/checkMail" ||
     path === "/forgotPassword" ||
     path === "/createNewPassword";
 
@@ -31,5 +32,8 @@ export const config = {
     "/verifyemail",
     "/forgotPassword",
     "/createNewPassword",
+    "/checkMail",
+    "/notAuthorized",
+    "/userList",
   ],
 };
