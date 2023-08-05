@@ -28,7 +28,10 @@ export default function LoginPage() {
     try {
       const { statusText, status, data } = await axios.post(
         "/api/users/login",
-        formData
+        {
+          email: formData.email.toLowerCase(),
+          password: formData.password,
+        }
       );
 
       if (statusText === "OK" && status === 200) {

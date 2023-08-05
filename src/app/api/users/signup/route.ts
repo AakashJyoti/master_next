@@ -32,6 +32,7 @@ export async function POST(request: NextRequest) {
       username,
       email,
       password: hashedPassword,
+      isAdmin: email === process.env.ADMIN_ID ? true : false,
     });
 
     const savedUser = await newUser.save();

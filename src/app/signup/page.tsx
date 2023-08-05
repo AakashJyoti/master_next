@@ -29,7 +29,11 @@ export default function SignUpPage() {
     try {
       const { statusText, status, data } = await axios.post(
         "/api/users/signup",
-        formData
+        {
+          username: formData.username,
+          password: formData.password,
+          email: formData.email.toLowerCase(),
+        }
       );
 
       if (statusText === "Created" && status === 201) {

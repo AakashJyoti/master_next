@@ -79,7 +79,7 @@ export default function ForgotPasswordPage() {
           disabled={!loading ? false : true}
           className="p-2 border border-gray-200 rounded-lg m-4 focus:outline-none focus:border-gray-600 bg-white text-black font-medium disabled:bg-black disabled:text-white hover:border-gray-600 hover:font-semibold"
         >
-          {loading ? "Creating..." : "Create New Password"}
+          {loading ? "Creating..." : "Send Mail"}
         </button>
       </form>
 
